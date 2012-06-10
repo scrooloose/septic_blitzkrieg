@@ -1,9 +1,7 @@
 function Engine() {
-    var $this = this;
-
     this.tank = new Tank(100, 100, imgTank, imgTurret);
-
     this.tank2 = new Tank(200, 200, imgTank2, imgTurret2);
+    this.game_over = false;
 
     // Handle keyboard controls
     this.keysDown = {};
@@ -20,9 +18,15 @@ function Engine() {
     // for some reason this needs to be here (rather than outside the
     // constructor) since otherwise it thinks "this" is actually the top level
     // window object...
+    var $this = this;
     this.main = function () {
         $this.update();
         $this.render();
+
+        if($this.game_over) {
+            clearInterval($this.interval_id);
+            alert("Game over");
+        }
     };
 }
 
@@ -30,6 +34,23 @@ function Engine() {
 Engine.prototype.update = function () {
     this.handle_tank1_keys();
     this.handle_tank2_keys();
+
+    var i;
+    var cur;
+
+    for(i in this.tank.bullets) {
+        cur = this.tank.bullets[i];
+        if (cur.check_for_collision([this.tank2]).length > 0) {
+            this.game_over = true;
+        }
+    }
+
+    for(i in this.tank2.bullets) {
+        cur = this.tank2.bullets[i];
+        if (cur.check_for_collision([this.tank]).length > 0) {
+            this.game_over = true;
+        }
+    }
 };
 
 Engine.prototype.handle_tank1_keys = function () {
@@ -53,6 +74,9 @@ Engine.prototype.handle_tank1_keys = function () {
     }
     if (190 in this.keysDown) { // player holding .
         this.tank.rotate_turret(1);
+    }
+    if (32 in this.keysDown) { // player holding space
+        this.tank.fire();
     }
 };
 
@@ -78,6 +102,9 @@ Engine.prototype.handle_tank2_keys = function () {
     if (84 in this.keysDown) { // player holding .
         this.tank2.rotate_turret(1);
     }
+    if (89 in this.keysDown) { // player holding .
+        this.tank2.fire();
+    }
 };
 
 // Draw everything
@@ -88,6 +115,6 @@ Engine.prototype.render = function () {
 };
 
 Engine.prototype.start_game = function() {
-    setInterval(this.main, 50);
+    this.interval_id = setInterval(this.main, 50);
 };
 

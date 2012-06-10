@@ -6,11 +6,14 @@ function Tank(x, y, body_img, turret_img) {
     this.speed = 0; //pixels per update
     this.body_img = body_img;
     this.turret_img = turret_img;
+
+    this.bullets = [];
+    this.last_fired = null;
 }
 
 
 Tank.prototype.accelerate = function() {
-    if (this.speed <= 15) {
+    if (this.speed <= 10) {
         this.speed++;
     }
 };
@@ -27,6 +30,12 @@ Tank.prototype.update_position = function() {
 
     this.x += Math.round(dx);
     this.y -= Math.round(dy);
+
+    for(var i in this.bullets) {
+        var cur = this.bullets[i];
+        cur.update();
+        cur.render();
+    }
 };
 
 Tank.prototype.rotate_body = function(forward) {
@@ -66,4 +75,12 @@ Tank.prototype.render = function() {
 
     ctx.translate(-this.x, -this.y);
     ctx.restore();
+};
+
+Tank.prototype.fire = function() {
+    var now = Date.now();
+    if (this.last_fired === null || now - this.last_fired > 3000) {
+        this.last_fired = now;
+        this.bullets.push(new Bullet(this.x, this.y, this.turret_heading));
+    }
 };
