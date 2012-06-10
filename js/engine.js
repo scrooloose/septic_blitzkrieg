@@ -1,6 +1,12 @@
 function Engine() {
-    this.tank = new Tank(100, 100, imgTank, imgTurret);
-    this.tank2 = new Tank(200, 200, imgTank2, imgTurret2);
+    this.tank = new Tank(60, 60, 90, imgTank, imgTurret);
+    this.tank2 = new Tank(965, 510, 270, imgTank2, imgTurret2);
+
+    this.arena = new Arena(1024, 572);
+    this.arena.add_tank(this.tank);
+    this.arena.add_tank(this.tank2);
+
+
     this.game_over = false;
 
     // Handle keyboard controls
@@ -38,19 +44,12 @@ Engine.prototype.update = function () {
     var i;
     var cur;
 
-    for(i in this.tank.bullets) {
-        cur = this.tank.bullets[i];
-        if (cur.check_for_collision([this.tank2]).length > 0) {
-            this.game_over = true;
-        }
+    for(i in this.arena.bullets) {
+        cur = this.arena.bullets[i];
+        cur.update();
     }
 
-    for(i in this.tank2.bullets) {
-        cur = this.tank2.bullets[i];
-        if (cur.check_for_collision([this.tank]).length > 0) {
-            this.game_over = true;
-        }
-    }
+    this.arena.update();
 };
 
 Engine.prototype.handle_tank1_keys = function () {
@@ -112,6 +111,11 @@ Engine.prototype.render = function () {
     ctx.drawImage(imgBg, 0, 0);
     this.tank.render();
     this.tank2.render();
+
+    for(var i in this.arena.bullets) {
+        var cur = this.arena.bullets[i];
+        cur.render();
+    }
 };
 
 Engine.prototype.start_game = function() {

@@ -1,9 +1,11 @@
-function Bullet(x, y, heading) {
+function Bullet(x, y, heading, arena, tank) {
     this.x = x;
     this.y = y;
     this.heading = heading;
+    this.arena = arena;
+    this.tank = tank;
 
-    this.speed = 15;
+    this.speed = 30;
 }
 
 //convert degrees to radians
@@ -25,14 +27,20 @@ Bullet.prototype.render = function() {
     ctx.fill();
 };
 
-Bullet.prototype.check_for_collision = function(tanks) {
+Bullet.prototype.check_for_collision = function() {
     var rv  = [];
-    for(var i in tanks) {
-        var cur = tanks[i];
-        if (this.x > cur.x - 33 && this.x < cur.x + 33 && this.y > cur.y - 33 && this.y < cur.y + 33) {
-            rv.push(cur);
+    for(var i in this.arena.tanks) {
+        var cur = this.arena.tanks[i];
+        if (cur != this.tank) {
+            if (this.x > cur.x - 33 && this.x < cur.x + 33 && this.y > cur.y - 33 && this.y < cur.y + 33) {
+                rv.push(cur);
+            }
         }
     }
 
     return rv;
+};
+
+Bullet.prototype.has_left_arena = function() {
+    return this.x < 0 || this.x > this.arena.width || this.y < 0 || this.y > this.arena.height;
 };
