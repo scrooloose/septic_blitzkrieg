@@ -2,9 +2,12 @@ function Engine() {
     this.tank = new Tank(60, 60, 90, imgTank, imgTurret);
     this.tank2 = new Tank(965, 510, 270, imgTank2, imgTurret2);
 
+
     this.arena = new Arena(1024, 572);
     this.arena.add_tank(this.tank);
     this.arena.add_tank(this.tank2);
+    this.arena.add_wall(new Wall(350, 130, 300, 100));
+    this.arena.add_wall(new Wall(350, 340, 300, 100));
 
 
     this.game_over = false;
@@ -108,14 +111,7 @@ Engine.prototype.handle_tank2_keys = function () {
 
 // Draw everything
 Engine.prototype.render = function () {
-    ctx.drawImage(imgBg, 0, 0);
-    this.tank.render();
-    this.tank2.render();
-
-    for(var i in this.arena.bullets) {
-        var cur = this.arena.bullets[i];
-        cur.render();
-    }
+    this.arena.render();
 };
 
 Engine.prototype.start_game = function() {

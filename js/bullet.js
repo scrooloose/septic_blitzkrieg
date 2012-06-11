@@ -29,12 +29,25 @@ Bullet.prototype.render = function() {
 
 Bullet.prototype.check_for_collision = function() {
     var rv  = [];
-    for(var i in this.arena.tanks) {
-        var cur = this.arena.tanks[i];
+
+    var i;
+    var cur;
+
+
+    for(i in this.arena.tanks) {
+        cur = this.arena.tanks[i];
         if (cur != this.tank) {
             if (this.x > cur.x - 33 && this.x < cur.x + 33 && this.y > cur.y - 33 && this.y < cur.y + 33) {
+                alert("hit!");
                 rv.push(cur);
             }
+        }
+    }
+
+    for(i in this.arena.walls) {
+        cur = this.arena.walls[i];
+        if (this.x > cur.x && this.x < cur.x + cur.width && this.y > cur.y && this.y < cur.y + cur.height) {
+            rv.push(cur);
         }
     }
 

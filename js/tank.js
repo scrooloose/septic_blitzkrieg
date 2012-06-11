@@ -25,11 +25,34 @@ Tank.prototype.decelerate = function() {
 
 Tank.prototype.update = function() {
     dx = this.speed * Math.sin(this.to_rads(this.body_heading));
-    dy = this.speed * Math.cos(this.to_rads(this.body_heading));
+    dy = -this.speed * Math.cos(this.to_rads(this.body_heading));
 
-    this.x += Math.round(dx);
-    this.y -= Math.round(dy);
+    dx = Math.round(dx);
+    dy = Math.round(dy);
 
+    if (!this.will_move_collide(dx, dy)) {
+        this.x += dx;
+        this.y += dy;
+    }
+};
+
+Tank.prototype.will_move_collide = function(dx, dy) {
+    var dest_x = this.x + dx;
+    var dest_y = this.y + dy;
+
+    for(var i in this.arena.walls) {
+        var cur = this.arena.walls[i];
+        if (dest_x-33 < cur.x+cur.width &&
+            dest_x+33 > cur.x &&
+            dest_y-33 < cur.y+cur.height &&
+            dest_y+33 > cur.y) {
+                return true;
+            }
+
+
+    }
+
+    return false;
 };
 
 Tank.prototype.rotate_body = function(forward) {
@@ -77,4 +100,8 @@ Tank.prototype.fire = function() {
         this.last_fired = now;
         this.arena.add_bullet(new Bullet(this.x, this.y, this.turret_heading, this.arena, this));
     }
+};
+
+Tank.prototype.set_arena = function(a) {
+    this.arena = a;
 };
