@@ -11,6 +11,7 @@ imgTank = pxLoader.addImage('assets/images/tank.png');
 imgTurret = pxLoader.addImage('assets/images/turret.png');
 imgTank2 = pxLoader.addImage('assets/images/tank2.png');
 imgTurret2 = pxLoader.addImage('assets/images/turret2.png');
+imgWall = pxLoader.addImage('assets/images/wall.jpg');
 pxLoader.addCompletionListener(function(){
     engine = new Engine();
     engine.start_game();
