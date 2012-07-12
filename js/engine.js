@@ -62,49 +62,49 @@ Engine.prototype.handle_tank1_keys = function () {
         this.tank.decelerate();
     }
 
-    if (40 in this.keysDown) { // Player holding down
+    if (40 in this.keysDown) { // key: down
         this.tank.decelerate();
     }
-    if (37 in this.keysDown) { // Player holding left
+    if (37 in this.keysDown) { // key: left
         this.tank.rotate_body(0);
     }
-    if (39 in this.keysDown) { // Player holding right
+    if (39 in this.keysDown) { // key: right
         this.tank.rotate_body(1);
     }
-    if (188 in this.keysDown) { // player holding ,
+    if (188 in this.keysDown) { // key: ,
         this.tank.rotate_turret(0);
     }
-    if (190 in this.keysDown) { // player holding .
+    if (190 in this.keysDown) { // key: .
         this.tank.rotate_turret(1);
     }
-    if (32 in this.keysDown) { // player holding space
+    if (32 in this.keysDown) { // key: space
         this.tank.fire();
     }
 };
 
 Engine.prototype.handle_tank2_keys = function () {
-    if (87 in this.keysDown) { // Player holding up
+    if (87 in this.keysDown) { // key: w
         this.tank2.accelerate();
     } else {
         this.tank2.decelerate();
     }
 
-    if (83 in this.keysDown) { // Player holding down
+    if (83 in this.keysDown) { // key: s
         this.tank2.decelerate();
     }
-    if (65 in this.keysDown) { // Player holding left
+    if (65 in this.keysDown) { // key: a
         this.tank2.rotate_body(0);
     }
-    if (68 in this.keysDown) { // Player holding right
+    if (68 in this.keysDown) { // key: d
         this.tank2.rotate_body(1);
     }
-    if (82 in this.keysDown) { // player holding ,
+    if (82 in this.keysDown) { // key: r
         this.tank2.rotate_turret(0);
     }
-    if (84 in this.keysDown) { // player holding .
+    if (84 in this.keysDown) { // key: t
         this.tank2.rotate_turret(1);
     }
-    if (89 in this.keysDown) { // player holding .
+    if (89 in this.keysDown) { // key: y
         this.tank2.fire();
     }
 };
