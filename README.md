@@ -10,22 +10,22 @@ In the meantime ...
 Player 1 keys
 ---
 
-Accelerate: up
-Brake: down
-Rotate body left: left
-Rotate body right: right
-Rotate turret: left: <
-Rotate turret: right: >
-FYYARE!: space
+* Accelerate: up
+* Brake: down
+* Rotate body left: left
+* Rotate body right: right
+* Rotate turret: left: <
+* Rotate turret: right: >
+* FYYARE!: space
 
 Player 2 keys
 ---
 
-Accelerate: w
-Brake: s
-Rotate body left: a
-Rotate body right: d
-Rotate turret left: r
-Rotate turret right: t
-FYYARE!: y
+* Accelerate: w
+* Brake: s
+* Rotate body left: a
+* Rotate body right: d
+* Rotate turret left: r
+* Rotate turret right: t
+* FYYARE!: y
 
