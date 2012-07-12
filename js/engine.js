@@ -9,7 +9,6 @@ function Engine() {
     this.arena.add_wall(new Wall(350, 130, 300, 100));
     this.arena.add_wall(new Wall(350, 340, 300, 100));
 
-
     this.game_over = false;
 
     // Handle keyboard controls
@@ -118,3 +117,29 @@ Engine.prototype.start_game = function() {
     this.interval_id = setInterval(this.main, 50);
 };
 
+
+//Game bootstrapping hax0r:
+//
+//should probably refactor this into a couple of Engine functions to tidy up
+//and remove the global variables
+
+//create the canvas
+var canvas = document.createElement("canvas");
+var ctx = canvas.getContext("2d");
+canvas.width = 1024;
+canvas.height = 572;
+document.body.appendChild(canvas);
+
+//load the images
+pxLoader = new PxLoader();
+imgBg = pxLoader.addImage('assets/images/background.png');
+imgTank = pxLoader.addImage('assets/images/tank.png');
+imgTurret = pxLoader.addImage('assets/images/turret.png');
+imgTank2 = pxLoader.addImage('assets/images/tank2.png');
+imgTurret2 = pxLoader.addImage('assets/images/turret2.png');
+imgWall = pxLoader.addImage('assets/images/wall.jpg');
+pxLoader.addCompletionListener(function(){
+    var e = new Engine();
+    e.start_game();
+});
+pxLoader.start();

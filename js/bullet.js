@@ -33,7 +33,6 @@ Bullet.prototype.check_for_collision = function() {
     var i;
     var cur;
 
-
     for(i in this.arena.tanks) {
         cur = this.arena.tanks[i];
         if (cur != this.tank) {
