@@ -1,6 +1,5 @@
-function Wall(x, y, width, height, arena) {
-    this.x = x;
-    this.y = y;
+function Wall(point, width, height, arena) {
+    this.point = point;
     this.width = width;
     this.height = height;
     this.arena = null;
@@ -21,7 +20,7 @@ Wall.prototype.set_arena = function(arena) {
 
 Wall.prototype.render = function() {
     ctx.fillStyle = Wall.pattern();
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    ctx.fillRect(this.point.x, this.point.y, this.width, this.height);
 };
 
 

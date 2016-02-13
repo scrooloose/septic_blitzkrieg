@@ -1,15 +1,15 @@
-function Tank(x, y, heading, body_img, turret_img) {
+function Tank(point, heading, body_img, turret_img) {
     this.body_heading = heading;
     this.turret_heading = heading;
-    this.x = x;
-    this.y = y;
+    this.point = point;
     this.speed = 0; //pixels per update
     this.body_img = body_img;
     this.turret_img = turret_img;
 
     this.last_fired = null;
+    this.bounding_box_rad = 30;
+    this.width = 33;
 }
-
 
 Tank.prototype.accelerate = function() {
     if (this.speed <= 10) {
@@ -31,25 +31,26 @@ Tank.prototype.update = function() {
     dy = Math.round(dy);
 
     if (!this.will_move_collide(dx, dy)) {
-        this.x += dx;
-        this.y += dy;
+        this.point.x += dx;
+        this.point.y += dy;
+    } else {
+        console.log("Collision");
+        this.speed = 0;
     }
 };
 
 Tank.prototype.will_move_collide = function(dx, dy) {
-    var dest_x = this.x + dx;
-    var dest_y = this.y + dy;
+    var dest_x = this.point.x + dx;
+    var dest_y = this.point.y + dy;
 
     for(var i in this.arena.walls) {
         var cur = this.arena.walls[i];
-        if (dest_x-33 < cur.x+cur.width &&
-            dest_x+33 > cur.x &&
-            dest_y-33 < cur.y+cur.height &&
-            dest_y+33 > cur.y) {
+        if (dest_x-this.bounding_box_rad < cur.point.x+cur.width &&
+            dest_x+this.bounding_box_rad > cur.point.x &&
+            dest_y-this.bounding_box_rad < cur.point.y+cur.height &&
+            dest_y+this.bounding_box_rad > cur.point.y) {
                 return true;
             }
-
-
     }
 
     return false;
@@ -82,15 +83,15 @@ Tank.prototype.render = function() {
     this.update();
 
     ctx.save();
-    ctx.translate(this.x, this.y);
+    ctx.translate(this.point.x, this.point.y);
     ctx.rotate(this.to_rads(this.body_heading));
-    ctx.drawImage(this.body_img, -33, -33);
+    ctx.drawImage(this.body_img, -this.width, -this.width);
 
     ctx.rotate(-this.to_rads(this.body_heading));
     ctx.rotate(this.to_rads(this.turret_heading));
-    ctx.drawImage(this.turret_img, -33, -33);
+    ctx.drawImage(this.turret_img, -this.width, -this.width);
 
-    ctx.translate(-this.x, -this.y);
+    ctx.translate(-this.point.x, -this.point.y);
     ctx.restore();
 };
 
@@ -98,7 +99,7 @@ Tank.prototype.fire = function() {
     var now = Date.now();
     if (this.last_fired === null || now - this.last_fired > 3000) {
         this.last_fired = now;
-        this.arena.add_bullet(new Bullet(this.x, this.y, this.turret_heading, this.arena, this));
+        this.arena.add_bullet(new Bullet(this.point.x, this.point.y, this.turret_heading, this.arena, this));
     }
 };
 

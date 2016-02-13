@@ -1,13 +1,18 @@
 function Engine() {
-    this.tank = new Tank(60, 60, 90, imgTank, imgTurret);
-    this.tank2 = new Tank(965, 510, 270, imgTank2, imgTurret2);
+    this.tank = new Tank(new Point(60, 60), 90, imgTank, imgTurret);
+    this.tank2 = new Tank(new Point(965, 510), 270, imgTank2, imgTurret2);
 
 
     this.arena = new Arena(1024, 572);
     this.arena.add_tank(this.tank);
     this.arena.add_tank(this.tank2);
-    this.arena.add_wall(new Wall(350, 130, 300, 100));
-    this.arena.add_wall(new Wall(350, 340, 300, 100));
+    this.arena.add_wall(new Wall(new Point(350, 130), 300, 100));
+    this.arena.add_wall(new Wall(new Point(350, 340), 300, 100));
+
+    this.arena.add_wall(new Wall(new Point(0, 0), 1024, 10));
+    this.arena.add_wall(new Wall(new Point(0, 562), 1024, 10));
+    this.arena.add_wall(new Wall(new Point(0, 0), 10, 572));
+    this.arena.add_wall(new Wall(new Point(1014, 0), 10, 572));
 
     this.game_over = false;
 
