@@ -4,28 +4,27 @@ function Arena(width, height) {
     this.walls = [];
     this.width = width;
     this.height = height;
-
-    this.renderables = [];
 }
 
 Arena.prototype.add_bullet = function(b) {
     this.bullets.push(b);
-    this.renderables.push(b);
 };
 
 Arena.prototype.add_tank = function(t) {
     this.tanks.push(t);
     t.set_arena(this);
-    this.renderables.push(t);
 };
 
 Arena.prototype.add_wall = function(w) {
     this.walls.push(w);
     w.set_arena(this);
-    this.renderables.push(w);
 };
 
 Arena.prototype.update = function() {
+    for(var i in this.tanks) {
+        this.tanks[i].update();
+    }
+
     for(var i = this.bullets.length-1; i >= 0; i--) {
         var cur = this.bullets[i];
         var collided_with = cur.check_for_collision();
@@ -40,11 +39,18 @@ Arena.prototype.update = function() {
     }
 };
 
-Arena.prototype.render = function() {
-    ctx.drawImage(imgBg, 0, 0);
-
-    for(var i in this.renderables) {
-        var cur = this.renderables[i];
-        cur.render();
+Arena.prototype.to_JSON = function() {
+    var rv = {}
+    for(i = 0; i < this.tanks.length; i++) {
+        rv['tank' + i] = this.tanks[i].to_JSON();
     }
+
+    rv.bullets = []
+    for(i = 0; i < this.bullets.length; i++) {
+        rv.bullets.push(this.bullets[i].to_JSON());
+    }
+
+    return JSON.stringify(rv)
 };
+
+module.exports = Arena;

@@ -3,3 +3,5 @@ function Point(x, y) {
     this.y = y;
 }
 
+module.exports = Point;
+

@@ -1,14 +1,13 @@
-function Tank(point, heading, body_img, turret_img) {
+function Tank(point, heading) {
     this.body_heading = heading;
     this.turret_heading = heading;
     this.point = point;
     this.speed = 0; //pixels per update
-    this.body_img = body_img;
-    this.turret_img = turret_img;
 
     this.last_fired = null;
     this.bounding_box_rad = 30;
     this.width = 33;
+    this.fire_delay = 500;
 }
 
 Tank.prototype.accelerate = function() {
@@ -34,8 +33,10 @@ Tank.prototype.update = function() {
         this.point.x += dx;
         this.point.y += dy;
     } else {
-        console.log("Collision");
-        this.speed = 0;
+        //fairly ineffecient way to make the tank stop at the closest point to
+        //colliding object... will do for now
+        this.speed--;
+        this.update();
     }
 };
 
@@ -79,25 +80,19 @@ Tank.prototype.to_rads = function(degs) {
     return degs * (Math.PI / 180);
 };
 
-Tank.prototype.render = function() {
-    this.update();
+Tank.prototype.to_JSON = function() {
+    rv = {}
+    rv['x'] = this.point.x
+    rv['y'] = this.point.y
+    rv['body_heading'] = this.body_heading;
+    rv['turret_heading'] = this.turret_heading;
 
-    ctx.save();
-    ctx.translate(this.point.x, this.point.y);
-    ctx.rotate(this.to_rads(this.body_heading));
-    ctx.drawImage(this.body_img, -this.width, -this.width);
-
-    ctx.rotate(-this.to_rads(this.body_heading));
-    ctx.rotate(this.to_rads(this.turret_heading));
-    ctx.drawImage(this.turret_img, -this.width, -this.width);
-
-    ctx.translate(-this.point.x, -this.point.y);
-    ctx.restore();
+    return rv;
 };
 
 Tank.prototype.fire = function() {
     var now = Date.now();
-    if (this.last_fired === null || now - this.last_fired > 3000) {
+    if (this.last_fired === null || now - this.last_fired > this.fire_delay) {
         this.last_fired = now;
         this.arena.add_bullet(new Bullet(this.point.x, this.point.y, this.turret_heading, this.arena, this));
     }
@@ -106,3 +101,5 @@ Tank.prototype.fire = function() {
 Tank.prototype.set_arena = function(a) {
     this.arena = a;
 };
+
+module.exports = Tank;

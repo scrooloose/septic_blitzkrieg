@@ -19,14 +19,6 @@ Bullet.prototype.update = function() {
     this.y -= this.speed * Math.cos(heading);
 };
 
-Bullet.prototype.render = function() {
-    //draw a circle
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, 2, 0, Math.PI*2, true);
-    ctx.closePath();
-    ctx.fill();
-};
-
 Bullet.prototype.check_for_collision = function() {
     var rv  = [];
 
@@ -56,3 +48,12 @@ Bullet.prototype.check_for_collision = function() {
 Bullet.prototype.has_left_arena = function() {
     return this.x < 0 || this.x > this.arena.width || this.y < 0 || this.y > this.arena.height;
 };
+
+Bullet.prototype.to_JSON = function() {
+    rv = {}
+    rv['x'] = this.x
+    rv['y'] = this.y
+    return rv;
+}
+
+module.exports = Bullet;
