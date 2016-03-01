@@ -1,5 +1,5 @@
 function ClientEngine(renderer) {
-    this.serverHost = "127.0.0.1"
+    this.serverHost = this._extractHost();
     this.serverPort = 9378
     this.playerNumber = getQStringParam("player")
     this.renderer = renderer;
@@ -15,6 +15,14 @@ function ClientEngine(renderer) {
     addEventListener("keyup", function(e) {
         delete $this.keysDown[e.keyCode];
     }, false);
+}
+
+ClientEngine.prototype._extractHost = function() {
+    if (getQStringParam("host") != undefined) {
+        return getQStringParam("host");
+    }
+
+    return "localhost";
 }
 
 ClientEngine.prototype.start = function() {
