@@ -9,6 +9,13 @@ Wall.prototype.set_arena = function(arena) {
     this.arena = arena;
 };
 
+Wall.prototype.contains_point = function(point) {
+    return point.x < this.point.x + this.width &&
+           point.x > this.point.x &&
+           point.y < this.point.y + this.height &&
+           point.y > this.point.y;
+}
+
 Wall.prototype.to_JSON = function() {
     rv = {}
     rv['x'] = this.point.x

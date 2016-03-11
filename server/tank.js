@@ -57,6 +57,13 @@ Tank.prototype.will_move_collide = function(dx, dy) {
     return false;
 };
 
+Tank.prototype.contains_point = function(point) {
+    return this.point.x > point.x - this.width &&
+           this.point.x < point.x + this.width &&
+           this.point.y > point.y - this.width &&
+           this.point.y < point.y + this.width
+}
+
 Tank.prototype.rotate_body = function(forward) {
     if (forward == 1) {
         this.body_heading += 5;
