@@ -50,6 +50,12 @@ Arena.prototype.to_JSON = function() {
         rv.bullets.push(this.bullets[i].to_JSON());
     }
 
+    rv.walls = []
+    for(i = 0; i < this.walls.length; i++) {
+        rv.walls.push(this.walls[i].to_JSON());
+    }
+
+
     return JSON.stringify(rv)
 };
 

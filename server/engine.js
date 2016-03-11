@@ -12,6 +12,8 @@ function Engine() {
     this.arena.add_wall(new Wall(new Point(0, 0), 10, 572));
     this.arena.add_wall(new Wall(new Point(1014, 0), 10, 572));
 
+    this.arena.add_wall(new Wall(new Point(100, 200), 30, 572));
+
     this.game_over = false;
 
     // The main game loop

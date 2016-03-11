@@ -6,7 +6,7 @@ function Renderer(images) {
 }
 
 Renderer.prototype.validateImages = function(images) {
-    var requiredKeys = ['body1', 'turret1', 'body2', 'turret2', 'bg'];
+    var requiredKeys = ['body1', 'turret1', 'body2', 'turret2', 'bg', 'wall'];
     for (i = 0; i < requiredKeys.length; i++) {
         var key = requiredKeys[i]
         if (images[key] == undefined) {
@@ -22,6 +22,10 @@ Renderer.prototype.render = function(worldState) {
 
     for (i = 0; i < worldState.bullets.length; i++) {
         this.renderBullet(worldState.bullets[i]);
+    }
+
+    for (i = 0; i < worldState.walls.length; i++) {
+        this.renderWall(worldState.walls[i]);
     }
 };
 
@@ -44,9 +48,21 @@ Renderer.prototype.renderBullet = function(bullet) {
     ctx.beginPath();
     ctx.arc(bullet.x, bullet.y, 2, 0, Math.PI*2, true);
     ctx.closePath();
+};
+
+Renderer.prototype.renderWall = function(wall) {
+    ctx.beginPath();
+    ctx.rect(wall.x, wall.y, wall.width, wall.height);
+    ctx.fillStyle = this._wallPattern();
     ctx.fill();
 };
 
+Renderer.prototype._wallPattern = function() {
+    if (Renderer.__wallPattern === undefined) {
+        Renderer._pattern = ctx.createPattern(this.images.wall, "repeat");
+    }
+    return Renderer._pattern;
+}
 
 Renderer.prototype.toRads = function(degs) {
     return degs * (Math.PI / 180);

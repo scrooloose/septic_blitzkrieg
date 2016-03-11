@@ -22,7 +22,8 @@ pxLoader.addCompletionListener(function(){
         turret1: imgTurret,
         body2: imgTank2,
         turret2: imgTurret2,
-        bg: imgBg
+        bg: imgBg,
+        wall: imgWall
     });
 
     engine = new ClientEngine(renderer);
