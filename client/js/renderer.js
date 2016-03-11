@@ -44,10 +44,13 @@ Renderer.prototype.renderTank = function(tank) {
 };
 
 Renderer.prototype.renderBullet = function(bullet) {
-    //draw a circle
     ctx.beginPath();
-    ctx.arc(bullet.x, bullet.y, 2, 0, Math.PI*2, true);
-    ctx.closePath();
+    ctx.arc(bullet.x, bullet.y, 3, 0, Math.PI*2, false);
+    ctx.fillStyle = 'black';
+    ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'red';
+    ctx.stroke();
 };
 
 Renderer.prototype.renderWall = function(wall) {
