@@ -12,7 +12,7 @@ function Engine() {
     this.arena.add_wall(new Wall(new Point(0, 0), 10, 572));
     this.arena.add_wall(new Wall(new Point(1014, 0), 10, 572));
 
-    this.arena.add_wall(new Wall(new Point(500, 150), 30, 300));
+    this.arena.add_wall(new Wall(new Point(500, 175), 30, 200));
 
     this.game_over = false;
 

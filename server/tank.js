@@ -8,6 +8,7 @@ function Tank(point, heading) {
     this.bounding_box_rad = 30;
     this.width = 33;
     this.fire_delay = 500;
+    this.health = 100;
 }
 
 Tank.prototype.accelerate = function() {
@@ -57,12 +58,16 @@ Tank.prototype.will_move_collide = function(dx, dy) {
     return false;
 };
 
+Tank.prototype.process_hit = function(bullet) {
+    this.health -= 10;
+};
+
 Tank.prototype.contains_point = function(point) {
     return this.point.x > point.x - this.width &&
            this.point.x < point.x + this.width &&
            this.point.y > point.y - this.width &&
            this.point.y < point.y + this.width
-}
+};
 
 Tank.prototype.rotate_body = function(forward) {
     if (forward == 1) {
@@ -93,6 +98,7 @@ Tank.prototype.to_JSON = function() {
     rv['y'] = this.point.y
     rv['body_heading'] = this.body_heading;
     rv['turret_heading'] = this.turret_heading;
+    rv['health'] = this.health;
 
     return rv;
 };

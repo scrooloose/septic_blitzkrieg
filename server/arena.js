@@ -30,6 +30,7 @@ Arena.prototype.update = function() {
         var collided_with = cur.check_for_collision();
         if (collided_with.length > 0) {
             this.bullets.splice(i, 1);
+            console.log("bullet collision");
         }
 
         if (cur.has_left_arena()) {

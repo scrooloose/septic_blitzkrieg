@@ -29,6 +29,7 @@ Bullet.prototype.check_for_collision = function() {
         cur = this.arena.tanks[i];
         if (cur != this.tank) {
             if (cur.contains_point(new Point(this.x,this.y))) {
+                cur.process_hit(this);
                 rv.push(cur);
             }
         }

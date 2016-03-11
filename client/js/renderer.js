@@ -3,6 +3,10 @@ function Renderer(images) {
     this.images = images
     this.setupCanvas();
     this.tank_width = 33;
+
+    this.HEALTH_BAR_WID = 500;
+    this.HEALTH_BAR_HEIGHT = 30;
+    this.HEALTH_BAR_Y = 610;
 }
 
 Renderer.prototype.setupCanvas = function() {
@@ -11,6 +15,8 @@ Renderer.prototype.setupCanvas = function() {
     canvas.width = 1024;
     canvas.height = 672;
     document.body.appendChild(canvas);
+
+    this.renderPlayerNames();
 };
 
 Renderer.prototype.validateImages = function(images) {
@@ -35,6 +41,8 @@ Renderer.prototype.render = function(worldState) {
     for (i = 0; i < worldState.walls.length; i++) {
         this.renderWall(worldState.walls[i]);
     }
+
+    this.renderHealthBars(worldState);
 };
 
 Renderer.prototype.renderTank = function(tank) {
@@ -77,4 +85,31 @@ Renderer.prototype._wallPattern = function() {
 
 Renderer.prototype.toRads = function(degs) {
     return degs * (Math.PI / 180);
+};
+
+Renderer.prototype.renderHealthBars = function(worldState) {
+    var tank0 = worldState['tank0'];
+    this.ctx.fillStyle="green";
+    this.ctx.fillRect(0, this.HEALTH_BAR_Y, this.HEALTH_BAR_WID, 30);
+    this.ctx.fillStyle="red";
+    var barWid = Math.max(-500, -(this.HEALTH_BAR_WID - (this.HEALTH_BAR_WID * (tank0.health / 100))));
+    this.ctx.fillRect(this.HEALTH_BAR_WID, this.HEALTH_BAR_Y, barWid, 30);
+
+    var tank1 = worldState['tank1'];
+    this.ctx.fillStyle="green";
+    this.ctx.fillRect(524, this.HEALTH_BAR_Y, this.HEALTH_BAR_WID, 30);
+    this.ctx.fillStyle="red";
+    var barWid = Math.max(-500, -(this.HEALTH_BAR_WID - (this.HEALTH_BAR_WID * (tank1.health / 100))));
+    this.ctx.fillRect(1024, this.HEALTH_BAR_Y, barWid, 30);
+
+};
+
+Renderer.prototype.renderPlayerNames = function(worldState) {
+    this.ctx.fillStyle="black";
+    this.ctx.font = "14px sans-serif";
+    this.ctx.fillText("Player One", 0, 600);
+
+    this.ctx.fillStyle="black";
+    this.ctx.font = "16px Arial";
+    this.ctx.fillText("Player two", 524, 600);
 };
