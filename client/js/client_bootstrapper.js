@@ -1,12 +1,6 @@
 //Game bootstrapping hax0r:
 //create the canvas
 
-var canvas = document.createElement("canvas");
-var ctx = canvas.getContext("2d");
-canvas.width = 1024;
-canvas.height = 572;
-document.body.appendChild(canvas);
-
 //load the images
 pxLoader = new PxLoader();
 imgBg = pxLoader.addImage('assets/images/background.png');
