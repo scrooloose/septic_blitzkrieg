@@ -25,6 +25,4 @@ wss.on('connection', function connection(ws) {
         console.log('Sending data: ' + engine.arena.to_JSON());
         ws.send(engine.arena.to_JSON());
     });
-
-  //ws.send('something');
 });
