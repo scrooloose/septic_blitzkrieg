@@ -8,7 +8,7 @@ function Engine() {
     this.arena.add_tank(this.tank2);
 
     this.arena.add_wall(new Wall(new Point(0, 0), 1024, 10));
-    this.arena.add_wall(new Wall(new Point(0, 562), 1024, 10));
+    this.arena.add_wall(new Wall(new Point(0, 564), 1024, 10));
     this.arena.add_wall(new Wall(new Point(0, 0), 10, 572));
     this.arena.add_wall(new Wall(new Point(1014, 0), 10, 572));
 
