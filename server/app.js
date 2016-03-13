@@ -4,6 +4,7 @@ global.Engine = require('./engine.js');
 global.Bullet = require('./bullet.js');
 global.Arena = require('./arena.js');
 global.Wall = require('./wall.js');
+global._ = require("underscore");
 
 var engine = new Engine();
 

@@ -1,6 +1,5 @@
-function Bullet(x, y, heading, arena, tank) {
-    this.x = x;
-    this.y = y;
+function Bullet(point, heading, arena, tank) {
+    this.point = point;
     this.heading = heading;
     this.arena = arena;
     this.tank = tank;
@@ -15,8 +14,8 @@ Bullet.prototype.to_rads = function(degs) {
 
 Bullet.prototype.update = function() {
     var heading = this.to_rads(this.heading);
-    this.x += this.speed * Math.sin(heading);
-    this.y -= this.speed * Math.cos(heading);
+    this.point.x += this.speed * Math.sin(heading);
+    this.point.y -= this.speed * Math.cos(heading);
 };
 
 Bullet.prototype.check_for_collision = function() {
@@ -28,7 +27,7 @@ Bullet.prototype.check_for_collision = function() {
     for(i in this.arena.tanks) {
         cur = this.arena.tanks[i];
         if (cur != this.tank) {
-            if (cur.contains_point(new Point(this.x,this.y))) {
+            if (cur.contains_point(this.point)) {
                 cur.process_hit(this);
                 rv.push(cur);
             }
@@ -37,7 +36,7 @@ Bullet.prototype.check_for_collision = function() {
 
     for(i in this.arena.walls) {
         cur = this.arena.walls[i];
-        if (cur.contains_point(new Point(this.x, this.y))) {
+        if (cur.contains_point(this.point)) {
             rv.push(cur);
         }
     }
@@ -46,13 +45,13 @@ Bullet.prototype.check_for_collision = function() {
 };
 
 Bullet.prototype.has_left_arena = function() {
-    return this.x < 0 || this.x > this.arena.width || this.y < 0 || this.y > this.arena.height;
+    return !this.arena.contains_point(this.point);
 };
 
 Bullet.prototype.to_JSON = function() {
     rv = {}
-    rv['x'] = this.x
-    rv['y'] = this.y
+    rv['x'] = this.point.x
+    rv['y'] = this.point.y
     return rv;
 }
 

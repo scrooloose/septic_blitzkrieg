@@ -107,7 +107,7 @@ Tank.prototype.fire = function() {
     var now = Date.now();
     if (this.last_fired === null || now - this.last_fired > this.fire_delay) {
         this.last_fired = now;
-        this.arena.add_bullet(new Bullet(this.point.x, this.point.y, this.turret_heading, this.arena, this));
+        this.arena.add_bullet(new Bullet(_.clone(this.point), this.turret_heading, this.arena, this));
     }
 };
 

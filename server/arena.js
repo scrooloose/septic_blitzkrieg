@@ -40,6 +40,10 @@ Arena.prototype.update = function() {
     }
 };
 
+Arena.prototype.contains_point = function(point) {
+    return !(point.x < 0 || point.x > this.width || point.y < 0 || point.y > this.height);
+}
+
 Arena.prototype.to_JSON = function() {
     var rv = {}
     for(i = 0; i < this.tanks.length; i++) {
